@@ -54,16 +54,17 @@
 <GREATER THAN OR EQUALS OPERATOR> ::= >=
 <LESS THAN OR EQUALS OPERATOR> ::= <=
 <CONCATENATION OPERATOR> ::= ||
-<DOUBLE PERIOD> ::= ..
+<DOUBLE PERIOD> ::= <PERIOD><PERIOD>
+<NONDOUBLEQUOTE CHARACTER> ::= !!!
 ```
 ## Terminator Token / Identifier
 ```
 <TOKEN> ::= <nondelimiter token> | <delimiter token>
 <nondelimiter token> ::=
-  <regular identifier>
+  <REGULAR IDENTIFIER>
   | <key word>
-  | <UNSIGED NUMERICAL LITERAL>
-  | <NATINAL CHARACTER STRING LITERAL>
+  | <UNSIGED NUMERIC LITERAL>
+  | <NATIONAL CHARACTER STRING LITERAL>
   | <BIT STRING LITERAL>
   | <HEX STRING LITERAL>
 <REGULAR IDENTIFIER> ::= <identifier body>
@@ -88,13 +89,13 @@
 <actual identifier> ::= <REGULAR IDENTIFIER> | <DELIMITED IDENTIFIER>
 <DELIMITED IDENTIFIER> ::= <DOUBLE QUOTE> <delimited identifier body> <DOUBLE QUOTE>
 <delimited identifier body> ::= <delimited identifier part> ...
-<delimited identifier part> ::= <nondoublequote character> | <DOUBLEQUOTE SYMBOL>
+<delimited identifier part> ::= <NONDOUBLEQUOTE CHARACTER> | <DOUBLEQUOTE SYMBOL>
 <DOUBLEQUOTE SYMBOL> ::= <DOUBLE QUOTE> <DOUBLE QUOTE>
 ```
 ## Terminator / Literal
 ```
 <unsigned literal> ::= <UNSIGNED NUMERIC LITERAL> | <general literal>
-<UNSIGNED NUMERICAL LITERAL> ::= <exact numeric literal> | <approximate numeric literal>
+<UNSIGNED NUMERIC LITERAL> ::= <exact numeric literal> | <approximate numeric literal>
 <exact numeric literal> ::= <UNSIGNED INTEGER> [ <PERIOD> [ <UNSIGNED INTEGER> ] ] | <PERIOD> <UNSIGNED INTEGER>
 <UNSIGNED INTEGER> ::= <DIGIT> ...
 <approximate numeric literal> ::= <mantissa> E <exponent>
@@ -102,7 +103,7 @@
 <exponent> ::= <signed integer>
 <signed integer> ::= [ <sign> ] <unsigned integer>
 <sign> ::= <PLUS SIGN> | <MINUS SIGN>
-<NATINAL CHARACTER STRING LITERAL> ::= N <QUOTE> [ <character representation> ... ] <QUOTE> [ { <separator> ... <QUOTE> [ <character representation> ... ] <QUOTE> }... ]
+<NATIONAL CHARACTER STRING LITERAL> ::= N <QUOTE> [ <character representation> ... ] <QUOTE> [ { <separator> ... <QUOTE> [ <character representation> ... ] <QUOTE> }... ]
 <character representation> ::= <nonquote character> | <quote symbol>
 <nonquote character> ::= !!!
 <quote symbol> ::= <QUOTE> <QUOTE>
@@ -159,7 +160,7 @@
   | <seconds value>
 <general literal> ::=
   <CHARACTER STRING LITERAL>
-  | <NATINAL CHARACTER STRING LITERAL>
+  | <NATIONAL CHARACTER STRING LITERAL>
   | <BIT STRING LITERAL>
   | <HEX STRING LITERAL>
   | <DATETIME LITERAL>
@@ -178,10 +179,10 @@
 <end field> ::=
   <non-second datetime field>
   | SECOND [<LEFT PAREN><interval fractional seconds precision> <RIGHT PAREN>]
-<interval fractional seconds percision> ::= <UNSIGNED INTEGER>
+<interval fractional seconds precision> ::= <UNSIGNED INTEGER>
 <single datetime field> ::=
   <non-second datetime field> [<LEFT PAREN><interval leading field precision><RIGHT PAREN>]
-  | SECOND [<LEFT PAREN><interval leading field precision>[<COMMA><LEFT PAREN><interval fractional seconds percision>]<RIGHT PAREN>]
+  | SECOND [<LEFT PAREN><interval leading field precision>[<COMMA><LEFT PAREN><interval fractional seconds precision>]<RIGHT PAREN>]
 ```
 
 ## Terminator / Keyword
@@ -262,11 +263,11 @@
   | VARCHAR [<LEFT PAREN><length><RIGHT PAREN>]
 <length> ::= <UNSIGNED INTEGER>
 <natinal character string type> ::=
-  NATINAL CHARACTER [<LEFT PAREN><length><RIGHT PAREN>]
-  | NATINAL CHAR [<LEFT PAREN><length><RIGHT PAREN>]
+  NATIONAL CHARACTER [<LEFT PAREN><length><RIGHT PAREN>]
+  | NATIONAL CHAR [<LEFT PAREN><length><RIGHT PAREN>]
   | NCHAR [<LEFT PAREN><length><RIGHT PAREN>]
-  | NATINAL CHARACTER VARYING [<LEFT PAREN><length><RIGHT PAREN>]
-  | NATINAL CHAR VARYING [<LEFT PAREN><length><RIGHT PAREN>]
+  | NATIONAL CHARACTER VARYING [<LEFT PAREN><length><RIGHT PAREN>]
+  | NATIONAL CHAR VARYING [<LEFT PAREN><length><RIGHT PAREN>]
   | NCHAR VARYING [<LEFT PAREN><length><RIGHT PAREN>]
 <bit string type> ::=
   BIT [<LEFT PAREN><length><RIGHT PAREN>]
@@ -275,19 +276,19 @@
   <exact numeric type>
   | <approximate numeric type>
 <exact numeric type> ::=
-  NUMERIC [<LEFT PAREN><percision>[<COMMA><scale>]<RIGHT PAREN>]
-  | DECIMAL [<LEFT PAREN><percision>[<COMMA><scale>]<RIGHT PAREN>]
-  | DEC [<LEFT PAREN><percision>[<COMMA><scale>]<RIGHT PAREN>]
+  NUMERIC [<LEFT PAREN><precision>[<COMMA><scale>]<RIGHT PAREN>]
+  | DECIMAL [<LEFT PAREN><precision>[<COMMA><scale>]<RIGHT PAREN>]
+  | DEC [<LEFT PAREN><precision>[<COMMA><scale>]<RIGHT PAREN>]
   | INTEGER | INT | SMALLINT
-<percision> ::= <UNSIGNED INTEGER>
+<precision> ::= <UNSIGNED INTEGER>
 <scale> ::= <UNSIGNED INTEGER>
 <approximate numeric type> ::=
-  FLOAT [<LEFT PAREN><percision><RIGHT PAREN>]
-  | REAL | DOUBLE PERCISION
+  FLOAT [<LEFT PAREN><precision><RIGHT PAREN>]
+  | REAL | DOUBLE PRECISION
 <datetime type> ::=
   DATE
   | TIME [<LEFT PAREN><time precision><RIGHT PAREN>][WITH TIME ZONE]
-  | TIMESTAMP [<LEFT PAREN><timestamp percision><RIGHT PAREN>][WITH TIME ZONE]
+  | TIMESTAMP [<LEFT PAREN><timestamp precision><RIGHT PAREN>][WITH TIME ZONE]
 <interval type> ::= INTERVAL <interval qualifier>
 ```
 ## Queries
@@ -499,11 +500,11 @@
   | <current time value function>
   | <current timestamp value function>
 <current date value function> ::= CURRENT DATE
-<current time value function> ::= CURRENT TIME [<LEFT PAREN><time percision><RIGHT PAREN>]
-<current timestamp value function> ::= CURRENT TIMESTAMP [<LEFT PAREN><timestamp percision><RIGHT PAREN>]
-<time percision> ::= <time fractional seconds percision>
-<time fractional seconds percision> ::= <UNSIGNED INTEGER>
-<timestamp percision> ::= <time fractional seconds percision>
+<current time value function> ::= CURRENT TIME [<LEFT PAREN><time precision><RIGHT PAREN>]
+<current timestamp value function> ::= CURRENT TIMESTAMP [<LEFT PAREN><timestamp precision><RIGHT PAREN>]
+<time precision> ::= <time fractional seconds precision>
+<time fractional seconds precision> ::= <UNSIGNED INTEGER>
+<timestamp precision> ::= <time fractional seconds precision>
 <time zone> ::= AT <time zone specifier>
 <time zone specifier> ::= LOCAL | TIME ZONE <interval value expression>
 <interval value expression> ::=
